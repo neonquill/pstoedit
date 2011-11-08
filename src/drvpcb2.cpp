@@ -44,7 +44,8 @@ int drvPCB2::pcbScale_x(const Point & p) const
 }
 int drvPCB2::pcbScale_y(const Point & p) const 
 {
-	return (int)((double)500000.0 - (double)p.y_ * SCALE + (double)options->tshifty * unit + (double)0.5);
+	// XXX p.y_ appears to be off by one, why???
+	return (int)((double)currentDeviceHeight * SCALE - ((double)p.y_ + (double)1.0) * SCALE + (double)options->tshifty * unit + (double)0.5);
 }
 int drvPCB2::pcbScale(const double & f)  
 {
@@ -82,7 +83,13 @@ constructBase
 {
 	unit = (options->mm ? MM100 : 100.0);
 	grid = (double)(options->grid) * unit;
-	outf << "PCB[\"\" 600000 500000]\n\n";
+}
+
+void drvPCB2::gen_preamble ()
+{
+	int width = pcbScale(currentDeviceWidth);
+	int height = pcbScale(currentDeviceHeight);
+	outf << "PCB[\"\" " << width << " " << height << "]\n\n";
 	if (options->grid != 0.0) {
 		outf << "Grid[";
 		outf << fixed << setprecision(6) << grid;
@@ -106,6 +113,9 @@ static void gen_layer (ostream & outf, C_ostrstream & layer, const char * layer_
 
 drvPCB2::~drvPCB2()
 {
+
+	gen_preamble ();
+
 	if (options->stdnames)
 	{
 		gen_layer (outf, layer_polygons, "1 \"component", false);

@@ -74,6 +74,7 @@ private:
 	void try_grid_snap(int value, bool & success) const;
 	static int _grid_snap (int value, double grid) ;
 	int grid_snap(int value, bool success) const;
+	void gen_preamble();
 
 	C_ostrstream layer_polygons, layer_polygons_nogrid;
 	C_ostrstream layer_pads, layer_pads_nogrid;
