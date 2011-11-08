@@ -141,7 +141,7 @@ void drvPCB2::show_path()
 {
 	bool round_success;
 	ostream *layer, *layer_nogrid;
-	if (isPolygon()) {
+	if (options->forcepoly || isPolygon()) {
 		switch (currentShowType()) {
 		case drvbase::fill:
 		case drvbase::eofill:

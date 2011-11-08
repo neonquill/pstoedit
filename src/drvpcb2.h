@@ -43,6 +43,7 @@ public:
 		Option < double, DoubleValueExtractor > tshifty;
 		Option < bool, BoolTrueExtractor > mm;
 		Option < bool, BoolTrueExtractor > stdnames;
+		Option < bool, BoolTrueExtractor > forcepoly;
 
 		DriverOptions():
 		grid(true,"-grid",0,0,"attempt to snap relevant output to grid (mils) and put failed objects to a different layer",0,0),
@@ -50,7 +51,8 @@ public:
 		tshiftx(true,"-tshiftx",0,0,"additional x shift measured in target units (mils)",0,0),
 		tshifty(true,"-tshifty",0,0,"additional y shift measured in target units (mils)",0,0),
 		mm(true,"-mm",0,0,"Switch to metric units (mm)",0,false),
-		stdnames(true,"-stdnames",0,0,"use standard layer names instead of descriptive names",0,false)
+		stdnames(true,"-stdnames",0,0,"use standard layer names instead of descriptive names",0,false),
+		forcepoly(true,"-forcepoly",0,0,"force all objects to be interpreted as polygons",0,false)
 		{
 			ADD(grid);
 			ADD(snapdist);
@@ -59,6 +61,7 @@ public:
 			ADD(grid);
 			ADD(mm);
 			ADD(stdnames);
+			ADD(forcepoly);
 		}
 	}*options;
 
